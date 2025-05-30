@@ -20,12 +20,12 @@ const Button: React.FC<ButtonProps> = ({
   icon,
   ...props
 }) => {
-  const baseStyles = 'rounded-md font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+  const baseStyles = 'rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 transform hover:scale-[1.02] active:scale-[0.98]';
   
   const variantStyles = {
-    primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
-    secondary: 'bg-purple-600 text-white hover:bg-purple-700 focus:ring-purple-500',
-    ghost: 'bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300',
+    primary: 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 focus:ring-blue-500 shadow-md hover:shadow-lg',
+    secondary: 'bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 focus:ring-purple-500 shadow-md hover:shadow-lg',
+    ghost: 'bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-sm',
   };
   
   const sizeStyles = {
@@ -34,7 +34,7 @@ const Button: React.FC<ButtonProps> = ({
     lg: 'px-6 py-3 text-lg',
   };
   
-  const disabledStyles = 'opacity-50 cursor-not-allowed';
+  const disabledStyles = 'opacity-50 cursor-not-allowed hover:scale-100 hover:shadow-none';
   
   return (
     <button
@@ -52,7 +52,11 @@ const Button: React.FC<ButtonProps> = ({
         {isLoading && (
           <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-200 border-t-white" />
         )}
-        {icon && !isLoading && <span>{icon}</span>}
+        {icon && !isLoading && (
+          <span className="transform transition-transform duration-200 group-hover:scale-110">
+            {icon}
+          </span>
+        )}
         {children && <span>{children}</span>}
       </div>
     </button>

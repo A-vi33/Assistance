@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { Message, ChatSettings } from '../types';
-import { config } from '../config';
 
 interface ChatState {
   messages: Message[];
@@ -18,8 +17,8 @@ export const useChatStore = create<ChatState>((set) => ({
   isTyping: false,
   settings: {
     darkMode: false,
-    apiKey: config.OPENAI_API_KEY,
-    model: config.DEFAULT_MODEL,
+    apiKey: '',
+    model: 'gpt-3.5-turbo',
   },
   addMessage: (message) =>
     set((state) => ({

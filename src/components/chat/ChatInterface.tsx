@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import MessageList from './MessageList';
 import ChatInput from './ChatInput';
+import Tutorial from '../tutorial/Tutorial';
 import { useChatStore } from '../../store/chatStore';
 import { fetchAIResponse } from '../../services/api';
 
@@ -14,7 +15,14 @@ const ChatInterface: React.FC = () => {
     clearMessages 
   } = useChatStore();
 
+  const [showTutorial, setShowTutorial] = useState(true);
+
   const handleSendMessage = useCallback(async (content: string) => {
+    // Hide tutorial when first message is sent
+    if (showTutorial) {
+      setShowTutorial(false);
+    }
+
     // Add user message to chat
     addMessage({ content, role: 'user' });
     
@@ -56,16 +64,29 @@ const ChatInterface: React.FC = () => {
     } finally {
       setIsTyping(false);
     }
-  }, [messages, addMessage, setIsTyping, settings]);
+  }, [messages, addMessage, setIsTyping, settings, showTutorial]);
+
+  const handleClearChat = () => {
+    clearMessages();
+    setShowTutorial(true);
+  };
 
   return (
     <div className="flex flex-col h-full">
-      <MessageList messages={messages} isTyping={isTyping} />
-      <ChatInput 
-        onSendMessage={handleSendMessage} 
-        onClearChat={clearMessages}
-        isTyping={isTyping}
-      />
+      <div className="flex-1 overflow-hidden">
+        {showTutorial && messages.length === 0 ? (
+          <Tutorial />
+        ) : (
+          <MessageList messages={messages} isTyping={isTyping} />
+        )}
+      </div>
+      <div className="flex-shrink-0">
+        <ChatInput 
+          onSendMessage={handleSendMessage} 
+          onClearChat={handleClearChat}
+          isTyping={isTyping}
+        />
+      </div>
     </div>
   );
 };

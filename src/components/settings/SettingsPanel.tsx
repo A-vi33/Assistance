@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import Button from '../ui/Button';
 import { useChatStore } from '../../store/chatStore';
-import { config } from '../../config';
 
 interface SettingsPanelProps {
   isOpen: boolean;
@@ -53,10 +52,9 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose }) => {
                 onChange={(e) => setLocalSettings({ ...localSettings, apiKey: e.target.value })}
                 placeholder="sk-..."
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white text-sm"
-                disabled
               />
               <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                API key is pre-configured for this project.
+                Your API key is stored locally and never sent to our servers.
               </p>
             </div>
             

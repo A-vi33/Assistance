@@ -36,56 +36,41 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, onClearChat, isTyp
   }, [message]);
 
   return (
-    <div className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 transition-colors duration-200">
-      <div className="max-w-4xl mx-auto">
-        <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
-          <div className="relative flex-1">
+    <div className="border-t border-gray-200 dark:border-gray-800 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 p-4 transition-colors duration-200">
+      <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
+        <div className="flex items-end space-x-2">
+          <div className="flex-1 relative">
             <textarea
               ref={textareaRef}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Type your message..."
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none min-h-[44px] max-h-32 shadow-sm hover:shadow-md transition-shadow duration-200"
               rows={1}
-              className="w-full pl-4 pr-12 py-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white resize-none transition-colors duration-200"
-              maxLength={4000}
               disabled={isTyping}
             />
-            <button
-              type="submit"
-              disabled={!message.trim() || isTyping}
-              className="absolute right-3 bottom-3 text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-              aria-label="Send message"
-            >
-              <Send size={20} />
-            </button>
+            <div className="absolute right-2 bottom-2 text-xs text-gray-500 dark:text-gray-400">
+              Press Enter to send, Shift + Enter for new line
+            </div>
           </div>
           
-          <div className="flex justify-between items-center">
-            <div className="text-xs text-gray-500 dark:text-gray-400">
-              {isTyping ? (
-                <span className="flex items-center">
-                  <RefreshCw size={14} className="mr-1 animate-spin" />
-                  AI is typing...
-                </span>
-              ) : (
-                <span>Press Enter to send, Shift+Enter for new line</span>
-              )}
-            </div>
-            
+          <div className="flex space-x-2">
+            <Button
+              type="submit"
+              disabled={!message.trim() || isTyping}
+              icon={<Send size={18} />}
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
+            />
             <Button
               variant="ghost"
-              size="sm"
               onClick={onClearChat}
+              icon={<Trash2 size={18} />}
               className="text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400"
-              aria-label="Clear chat"
-              icon={<Trash2 size={16} />}
-            >
-              Clear chat
-            </Button>
+            />
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 };
